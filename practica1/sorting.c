@@ -126,3 +126,26 @@ int MergeSort(int* array, int ip, int iu)
   return merge (array, ip, im, iu);
 }
 
+/*
+ind Partir(tabla T, ind P, ind U)
+  M=Medio(T,P,U);
+  k=T[M];
+  swap(T[P],T[M]);
+  M=P;
+  para i de P+1 a U :
+    si T[i]<k :
+      M++;
+      swap(T[i],T[M]);
+  swap(T[P],T[M]);
+  devolver M;
+*/
+
+int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot)
+{
+  int m;
+  if (((iu - ip) % 2) != 0)
+    m = iu - ip;
+  else
+    m = iu - (ip -1);
+  int im = array[m];
+}

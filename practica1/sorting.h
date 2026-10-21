@@ -21,11 +21,12 @@
 
 /* type definitions */
 typedef int (* pfunc_sort)(int*, int, int);
+typedef int (*pfunc_pivot)(int*, int, int, int*);
 
 /* Functions */
 
 int BubbleSort(int* array, int ip, int iu);
 int InsertSort(int* array, int ip, int iu);
-
+int MergeSort(int* array, int ip, int iu);
 
 #endif
