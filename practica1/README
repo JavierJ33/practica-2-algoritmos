@@ -1,0 +1,39 @@
+Comandos usados para generar histograma:
+
+1:
+
+./exercise1 -limInf 1 -limSup 10 -numN 100000 | tail -n +4 | sort -n | uniq -c | awk '{print $2, $1}' > Datos.txt
+
+tail -> quita las cabeceras
+sort -n | uniq -c -> cuenta cuantas veces sale cada numero en orden creciente
+awk -> intercambia las columnas
+
+2:
+
+gnuplot
+
+abre gnuplot
+
+3:
+gnuplot -e 'set term png size 800,500; set output "histograma.png"; set title "Histograma de frecuencias"; set xlabel "Numero"; set ylabel "Frecuencia"; set yrange [0:12000]; set xrange [0:11]; plot "Datos.txt" title "Frecuencia" with boxes, 10000 title "Media"'
+
+set term png size 800,500 -> dimesiona la imagen salida
+set output "histograma.png" -> le pone un nombre al archivo
+set title "Histograma de frecuencias" -> Asigna un titulo a la grafica
+set xlabel "Numero" -> titulo al eje x
+set ylabel "Frecuencia" -> titulo al eje y
+set yrange [0:12000] -> añade un dominio al eje y
+set xrange [0:11] -> añade un dominio al eje x
+plot "Datos.txt" title "Frecuencia" with boxes, 10000 title "Media" -> Lee el fichero datos, asigna el nombre frecuencia a la leyenda, 
+                                                                    dibuja la frecuencia como barras, dibuja una funcion constante 
+                                                                    con una linea de media (100000 numeors generados alatoriamente 
+                                                                    entre 1 y 10 incluidos = 100000/10 = 10000 veces deberia salir 
+                                                                    cada numero)
+
+
+
+
+Para las graficas desde 1000 a 10000 de 1000 en mil.
+De cada tamaño promediar unas 1000 minimo o si no 5000
+insert sort deberian de diferenciarse ligeramente las raficas de OBmax min  med
+en Bsort las graficas deberian de coincidir
