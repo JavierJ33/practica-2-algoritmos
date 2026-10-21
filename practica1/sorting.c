@@ -109,3 +109,20 @@ int BubbleSort(int *array, int ip, int iu)
   }
   return OB;
 }
+
+
+int merge(int* array, int ip, int iu, int im);
+
+int MergeSort(int* array, int ip, int iu)
+{
+  int im;
+
+  if (!array || ip > iu) return ERR;
+  if (ip == iu) return 1;
+
+  im = (ip + iu) / 2;
+  MergeSort_rec(array, ip, im);
+  MergeSort_rec(array, im+1, iu);
+  return merge (array, ip, im, iu);
+}
+
