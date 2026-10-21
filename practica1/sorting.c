@@ -110,18 +110,6 @@ int BubbleSort(int *array, int ip, int iu)
   return OB;
 }
 
-/*
-status MergeSort(tabla T, ind P, ind U)
-  si P>U :
-    devolver ERROR;
-  si P==U :
-    devolver OK;
-  else :
-    M=(P+U)/2;
-    MergeSort(T,P,M);
-    MergeSort(T,M+1,U);
-  devolver Combinar(T,P,M,U);
-*/
 
 int merge(int* array, int ip, int iu, int im);
 
@@ -137,3 +125,4 @@ int MergeSort(int* array, int ip, int iu)
   MergeSort_rec(array, im+1, iu);
   return merge (array, ip, im, iu);
 }
+
