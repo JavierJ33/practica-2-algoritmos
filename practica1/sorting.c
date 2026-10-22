@@ -31,7 +31,7 @@
 int InsertSort(int *array, int ip, int iu)
 {
   int OB = 0;
-  if (array==NULL || ip < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip)
     return ERR;
   for (int i = ip + 1; i < iu + 1; i++)
   {
@@ -111,8 +111,98 @@ int BubbleSort(int *array, int ip, int iu)
 }
 
 
-int merge(int* array, int ip, int iu, int im);
+/***************************************************/
+/* Function: Merge    Date: 21/10/2026        */
+/* Authors: Gonzalez Hijano, Ivan                  */
+/*                                                 */
+/*   */
+/*                                                 */
+/* Input:                                          */
+/* int *array:                         */
+/* int ip:        */
+/* int iu:         */
+/* int iu:         */
+/* Output:                                         */
+/* int: number of element comparisons, or ERR if   */
+/* the input is invalid                            */
+/***************************************************/
+int merge(int *array, int ip, int iu, int im)
+{
+  if (array == NULL || ip < 0 || iu < ip)
+  {
+    return ERR;
+  }
 
+  int *tabla_aux = (int *)malloc((iu - ip + 1) * sizeof(int));
+  if (tabla_aux == NULL)
+  {
+    return ERR;
+  }
+  for (int i = 0; i < iu - ip + 1; i++)
+  {
+    tabla_aux[i] = array[ip + i];
+  }
+
+  int i = ip, j = im  + 1, k = ip;
+
+  while ((i <= im) && (j <= iu))
+  {
+    if (array[i] < array[j])
+    {
+      tabla_aux[k] = array[i];
+      i++;
+    }
+    else
+    {
+      tabla_aux[k] = array[j];
+      j++;
+    }
+    k++;
+  }
+  if (i > im)
+  {
+    while (j <= iu)
+    {
+      tabla_aux[k] = array[j];
+      j++;
+      k++;
+    }
+  }
+  else if (j > iu)
+  {
+    while (i <= im)
+    {
+      tabla_aux[k] = array[i];
+      i++;
+      k++;
+    }
+  }
+  /*FUNCION COPIAR PROFE*/
+  array += ip;
+  for (int i = 0; i <= iu-ip; i++)
+  {
+    array[i] = tabla_aux[i];
+  }
+  array -= ip;
+  Free(tabla_aux);
+  return OK;
+}
+
+/***************************************************/
+/* Function: Merge    Date: 21/10/2026        */
+/* Authors:                   */
+/*                                                 */
+/*   */
+/*                                                 */
+/* Input:                                          */
+/* int *array:                         */
+/* int ip:        */
+/* int iu:         */
+/* int iu:         */
+/* Output:                                         */
+/* int: number of element comparisons, or ERR if   */
+/* the input is invalid                            */
+/***************************************************/
 int MergeSort(int* array, int ip, int iu)
 {
   int im;
@@ -125,4 +215,3 @@ int MergeSort(int* array, int ip, int iu)
   MergeSort_rec(array, im+1, iu);
   return merge (array, ip, im, iu);
 }
-
