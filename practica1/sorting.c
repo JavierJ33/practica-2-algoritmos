@@ -138,14 +138,14 @@ int merge(int *array, int ip, int iu, int im)
   {
     return ERR;
   }
-  for (int i = 0; i <= iu - ip + 1; i++)
+  for (int i = 0; i < iu - ip + 1; i++)
   {
     tabla_aux[i] = array[ip + i];
   }
 
-  int i = ip, j = iu + 1, k = ip;
+  int i = ip, j = im  + 1, k = ip;
 
-  while ((i <= iu) && (j <= im))
+  while ((i <= im) && (j <= iu))
   {
     if (array[i] < array[j])
     {
@@ -159,18 +159,18 @@ int merge(int *array, int ip, int iu, int im)
     }
     k++;
   }
-  if (i > iu)
+  if (i > im)
   {
-    while (j <= im)
+    while (j <= iu)
     {
       tabla_aux[k] = array[j];
       j++;
       k++;
     }
   }
-  else if (j > im)
+  else if (j > iu)
   {
-    while (i <= iu)
+    while (i <= im)
     {
       tabla_aux[k] = array[i];
       i++;
@@ -179,11 +179,10 @@ int merge(int *array, int ip, int iu, int im)
   }
   /*FUNCION COPIAR PROFE*/
   array += ip;
-  for (int i = 0; i <= iu; i++)
+  for (int i = 0; i <= iu-ip; i++)
   {
     array[i] = tabla_aux[i];
   }
   array -= ip;
   Free(tabla_aux);
-  return array; /*Deveria devolver un int no puntero revisar*/
-}
+  return OK;
