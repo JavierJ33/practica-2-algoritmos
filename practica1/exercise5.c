@@ -4,7 +4,7 @@
 /*                                                         */
 /* Programa that writes in a file                          */
 /* the average times of the algorithm                      */
-/* of sorting by insertion                                 */
+/* MergeSort                                               */
 /*                                                         */
 /* Input: Command Line                                     */
 /* -num_min: lowest number of table elements               */
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  printf("Practice number 1, section 5\n");
+  printf("Practice number 2, section 5\n");
   printf("Done by: Jarque Narro Javier y Gonzalez Hijano Ivan\n");
   printf("Group: 126\n");
   
@@ -66,7 +66,7 @@ int main(int argc, char** argv)
   }
 
   /* compute times */
-  ret = generate_sorting_times(InsertSort, nombre,num_min, num_max,incr, n_perms);
+  ret = generate_sorting_times(MergeSort, nombre,num_min, num_max,incr, n_perms);
   if (ret == ERR) { /* ERR_TIME should be a negative number */
     printf("Error in function generate_sorting_times\n");
     exit(-1);

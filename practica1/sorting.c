@@ -110,7 +110,6 @@ int BubbleSort(int *array, int ip, int iu)
   return OB;
 }
 
-
 /***************************************************/
 /* Function: Merge    Date: 21/10/2026        */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -143,7 +142,7 @@ int merge(int *array, int ip, int iu, int im)
     tabla_aux[i] = array[ip + i];
   }
 
-  int i = ip, j = im  + 1, k = ip;
+  int i = ip, j = im + 1, k = ip;
 
   while ((i <= im) && (j <= iu))
   {
@@ -179,7 +178,7 @@ int merge(int *array, int ip, int iu, int im)
   }
   /*FUNCION COPIAR PROFE*/
   array += ip;
-  for (int i = 0; i <= iu-ip; i++)
+  for (int i = 0; i <= iu - ip; i++)
   {
     array[i] = tabla_aux[i];
   }
@@ -203,15 +202,63 @@ int merge(int *array, int ip, int iu, int im)
 /* int: number of element comparisons, or ERR if   */
 /* the input is invalid                            */
 /***************************************************/
-int MergeSort(int* array, int ip, int iu)
+int MergeSort(int *array, int ip, int iu)
 {
   int im;
 
-  if (!array || ip > iu) return ERR;
-  if (ip == iu) return 1;
+  if (!array || ip > iu)
+    return ERR;
+  if (ip == iu)
+    return 1;
 
   im = (ip + iu) / 2;
   MergeSort_rec(array, ip, im);
-  MergeSort_rec(array, im+1, iu);
-  return merge (array, ip, im, iu);
+  MergeSort_rec(array, im + 1, iu);
+  return merge(array, ip, im, iu);
+}
+
+int QuickSort_mean(int *array, int ip, int iu)
+{
+  if (array == NULL || ip < 0 || iu < ip)
+  {
+    return ERR;
+  }
+  if(iu=ip){
+    return OK;
+  }
+
+  int *pos = (int*)calloc(1, sizeof(int));
+  if(pos==NULL){
+    return ERR;
+  }
+  if(pivot_mean(array, ip, iu, pos)==ERR){
+    free(pos);
+    return ERR;
+  }
+  if(array[ip]<array[(*pos)-1]){
+    if(QuickSort_mean(array, ip, (*pos)-1)==ERR){
+      free(pos);
+      return ERR;
+    }
+  }
+  if(array[(*pos)+1]<array[iu]){
+    if(QuickSort_mean(array, (*pos)+1, iu)==ERR){
+      return ERR;
+      free(pos);
+    }
+  }
+  free(pos);
+  return OK;
+}
+
+int pivot_mean(int *array, int ip, int iu, int *pos)
+{
+  if (array == NULL || ip < 0 || iu < ip || pos == NULL)
+  {
+    return ERR;
+  }
+  int mean = 0;
+  mean = (ip-ip+(iu-ip))/2;
+  *pos=mean;
+  return OK;
 }
