@@ -208,10 +208,83 @@ int MergeSort(int* array, int ip, int iu)
   int im;
 
   if (!array || ip > iu) return ERR;
-  if (ip == iu) return 1;
+  if (ip == iu) return OK;
 
   im = (ip + iu) / 2;
-  MergeSort_rec(array, ip, im);
-  MergeSort_rec(array, im+1, iu);
+  MergeSort(array, ip, im);
+  MergeSort(array, im+1, iu);
   return merge (array, ip, im, iu);
+}
+
+
+/*
+status QS(tabla T, ind P, ind U)
+si P>U :
+devolver ERROR;
+si P==U :
+devolver OK;
+else :
+M=Partir(T,P,U);
+si P<M-1 :
+QS(T,P,M-1);
+si M+1 < U :
+QS(T,M+1,U);
+devolver OK;
+*/
+
+int QuickSort_min(int* array, int ip, int iu)
+{
+  if (ip > iu || !array) return ERR;
+  if (ip == iu) return OK;
+  int* pos;
+  int OBs = partition(array, ip, iu, pos, ip);
+  if (ip < pos - 1)
+  {
+    QuickSort_min(array, ip, pos - 1);
+  }
+  if (pos + 1 < iu)
+  {
+    QuickSort_min (array, pos + 1, iu);
+  }
+  return OBs;
+}
+
+/*
+ind Partir(tabla T, ind P, ind U)
+  M=Medio(T,P,U);
+  k=T[M];
+  swap(T[P],T[M]);
+  M=P;
+  para i de P+1 a U :
+    si T[i]<k :
+      M++;
+      swap(T[i],T[M]);
+  swap(T[P],T[M]);
+  devolver M;
+*/
+
+int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot)
+{
+  int OBs;
+  pos = pivot_min (array, ip, iu, pos);
+  pivot = array[*pos];
+  swap_s (array[ip], array[*pos]);
+  pos = ip;
+  for (int i = ip + 1; i < iu; i++)
+  {
+    if (array[i] < pivot)
+    {
+      pos++;
+      swap_s (array[i], array[*pos]);
+      OBs++;
+    }
+  }
+  swap_s (array[ip], array[*pos]);
+  return OBs;
+}
+
+int pivot_min(int* array, int ip, int iu, int* pos)
+{
+  pos = ip;
+  return 0;
 }
