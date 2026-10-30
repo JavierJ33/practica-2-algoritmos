@@ -127,7 +127,7 @@ int BubbleSort(int *array, int ip, int iu)
 /***************************************************/
 int merge(int *array, int ip, int iu, int im)
 {
-  if (array == NULL || ip < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip || im < ip || im > iu)
   {
     return ERR;
   }
@@ -142,10 +142,11 @@ int merge(int *array, int ip, int iu, int im)
     tabla_aux[i] = array[ip + i];
   }
 
-  int i = ip, j = im + 1, k = ip;
-
+  int i = ip, j = im + 1, k = 0;
+  int OB=0;
   while ((i <= im) && (j <= iu))
   {
+    OB++;
     if (array[i] < array[j])
     {
       tabla_aux[k] = array[i];
@@ -183,8 +184,8 @@ int merge(int *array, int ip, int iu, int im)
     array[i] = tabla_aux[i];
   }
   array -= ip;
-  Free(tabla_aux);
-  return OK;
+  free(tabla_aux);
+  return OB;
 }
 
 /***************************************************/
@@ -219,36 +220,35 @@ int MergeSort(int *array, int ip, int iu)
 
 int QuickSort_mean(int *array, int ip, int iu)
 {
-  if (array == NULL || ip < 0 || iu < ip)
+  if (array == NULL || ip < 0)
   {
     return ERR;
   }
-  if(iu=ip){
-    return OK;
+  if(iu<=ip){
+    return 0;
+  }
+  int pos;
+  
+  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
+  if(partition == ERR)
+  {
+    return ERR;
   }
 
-  int *pos = (int*)calloc(1, sizeof(int));
-  if(pos==NULL){
+  int QuickSort_left =  QuickSort_mean(array, ip, pos - 1);
+  if (QuickSort_left == ERR)
+  {
     return ERR;
   }
-  if(pivot_mean(array, ip, iu, pos)==ERR){
-    free(pos);
+
+  int QuickSort_right =  QuickSort_mean(array, pos+1, iu);
+  if (QuickSort_right == ERR)
+  {
     return ERR;
   }
-  if(array[ip]<array[(*pos)-1]){
-    if(QuickSort_mean(array, ip, (*pos)-1)==ERR){
-      free(pos);
-      return ERR;
-    }
-  }
-  if(array[(*pos)+1]<array[iu]){
-    if(QuickSort_mean(array, (*pos)+1, iu)==ERR){
-      return ERR;
-      free(pos);
-    }
-  }
-  free(pos);
-  return OK;
+
+ return partition + QuickSort_left + QuickSort_right;
+
 }
 
 int pivot_mean(int *array, int ip, int iu, int *pos)
@@ -258,7 +258,7 @@ int pivot_mean(int *array, int ip, int iu, int *pos)
     return ERR;
   }
   int mean = 0;
-  mean = (ip-ip+(iu-ip))/2;
+  mean = ip+(iu-ip)/2;
   *pos=mean;
   return OK;
 }
