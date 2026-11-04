@@ -25,9 +25,11 @@
 
 int main(int argc, char** argv)
 {
-  int i, num_min, num_max, incr, n_perms;
-  char nombre[256];
+  int i, k, num_min, num_max, incr, n_perms;
+  char nombre[256], fichero[300];
+  pfunc_sort algoritmos[3] = {QuickSort_min, QuickSort_mean, QuickSort_median};
   short ret;
+  const char *sufijos[3] = {"min", "mean", "median"};
 
   srand(time(NULL));
 
@@ -44,7 +46,7 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
-  printf("Practice number 1, section 5\n");
+  printf("Practice number 2, section 6\n");
   printf("Done by: Jarque Narro Javier y Gonzalez Hijano Ivan\n");
   printf("Group: 126\n");
   
@@ -65,8 +67,15 @@ int main(int argc, char** argv)
     }
   }
 
-  /* compute times */
-  ret = generate_sorting_times(BubbleSort, nombre,num_min, num_max,incr, n_perms);
+
+ for (k = 0; k < 3; k++) {
+  snprintf(fichero, sizeof(fichero), "%s_%s.log", nombre, sufijos[k]);
+  ret = generate_sorting_times(algoritmos[k], fichero, num_min, num_max, incr, n_perms);
+  if (ret == ERR) {
+    printf("Error in function generate_sorting_times (%s)\n", sufijos[k]);
+    exit(-1);
+  }
+}
   if (ret == ERR) { /* ERR_TIME should be a negative number */
     printf("Error in function generate_sorting_times\n");
     exit(-1);

@@ -110,7 +110,6 @@ int BubbleSort(int *array, int ip, int iu)
   return OB;
 }
 
-
 /***************************************************/
 /* Function: Merge    Date: 21/10/2026        */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -128,7 +127,7 @@ int BubbleSort(int *array, int ip, int iu)
 /***************************************************/
 int merge(int *array, int ip, int iu, int im)
 {
-  if (array == NULL || ip < 0 || iu < ip)
+  if (array == NULL || ip < 0 || iu < ip || im < ip || im > iu)
   {
     return ERR;
   }
@@ -143,10 +142,11 @@ int merge(int *array, int ip, int iu, int im)
     tabla_aux[i] = array[ip + i];
   }
 
-  int i = ip, j = im  + 1, k = ip;
-
+  int i = ip, j = im + 1, k = 0;
+  int OB=0;
   while ((i <= im) && (j <= iu))
   {
+    OB++;
     if (array[i] < array[j])
     {
       tabla_aux[k] = array[i];
@@ -179,13 +179,13 @@ int merge(int *array, int ip, int iu, int im)
   }
   /*FUNCION COPIAR PROFE*/
   array += ip;
-  for (int i = 0; i <= iu-ip; i++)
+  for (int i = 0; i <= iu - ip; i++)
   {
     array[i] = tabla_aux[i];
   }
   array -= ip;
-  Free(tabla_aux);
-  return OK;
+  free(tabla_aux);
+  return OB;
 }
 
 /***************************************************/
@@ -203,7 +203,7 @@ int merge(int *array, int ip, int iu, int im)
 /* int: number of element comparisons, or ERR if   */
 /* the input is invalid                            */
 /***************************************************/
-int MergeSort(int* array, int ip, int iu)
+int MergeSort(int *array, int ip, int iu)
 {
   int im;
 
@@ -287,4 +287,59 @@ int pivot_min(int* array, int ip, int iu, int* pos)
 {
   pos = ip;
   return 0;
+}
+  if (!array || ip > iu)
+    return ERR;
+  if (ip == iu)
+    return 1;
+
+  im = (ip + iu) / 2;
+  MergeSort_rec(array, ip, im);
+  MergeSort_rec(array, im + 1, iu);
+  return merge(array, ip, im, iu);
+}
+
+int QuickSort_mean(int *array, int ip, int iu)
+{
+  if (array == NULL || ip < 0)
+  {
+    return ERR;
+  }
+  if(iu<=ip){
+    return 0;
+  }
+  int pos;
+  
+  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
+  if(partition == ERR)
+  {
+    return ERR;
+  }
+
+  int QuickSort_left =  QuickSort_mean(array, ip, pos - 1);
+  if (QuickSort_left == ERR)
+  {
+    return ERR;
+  }
+
+  int QuickSort_right =  QuickSort_mean(array, pos+1, iu);
+  if (QuickSort_right == ERR)
+  {
+    return ERR;
+  }
+
+ return partition + QuickSort_left + QuickSort_right;
+
+}
+
+int pivot_mean(int *array, int ip, int iu, int *pos)
+{
+  if (array == NULL || ip < 0 || iu < ip || pos == NULL)
+  {
+    return ERR;
+  }
+  int mean = 0;
+  mean = ip+(iu-ip)/2;
+  *pos=mean;
+  return OK;
 }
