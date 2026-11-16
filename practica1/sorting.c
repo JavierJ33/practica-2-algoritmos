@@ -127,7 +127,7 @@ int BubbleSort(int *array, int ip, int iu)
 /***************************************************/
 int merge(int *array, int ip, int iu, int im)
 {
-  if (array == NULL || ip < 0 || iu < ip || im < ip || im > iu)
+  if (array == NULL || ip < 0 || iu < ip || im < ip || im >= iu)
   {
     return ERR;
   }
@@ -135,6 +135,7 @@ int merge(int *array, int ip, int iu, int im)
   int *tabla_aux = (int *)malloc((iu - ip + 1) * sizeof(int));
   if (tabla_aux == NULL)
   {
+    fprintf(stderr, "Error reservando memoria en el merge\n")
     return ERR;
   }
   for (int i = 0; i < iu - ip + 1; i++)
@@ -311,7 +312,7 @@ int QuickSort_mean(int *array, int ip, int iu)
   int pos;
   
   int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
-  if(partition == ERR)
+  if(ob_partition == ERR)
   {
     return ERR;
   }
@@ -328,7 +329,7 @@ int QuickSort_mean(int *array, int ip, int iu)
     return ERR;
   }
 
- return partition + QuickSort_left + QuickSort_right;
+ return ob_partition + QuickSort_left + QuickSort_right;
 
 }
 
