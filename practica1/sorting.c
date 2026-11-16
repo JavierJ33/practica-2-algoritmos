@@ -8,7 +8,7 @@
  * Fecha: 16-09-2019
  *
  */
-
+#include <stdio.h>
 #include <stdlib.h>
 #include "sorting.h"
 
