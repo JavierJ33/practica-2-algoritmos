@@ -57,6 +57,18 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
+  for (int i = 0; i < tamano - 1; i++)
+{
+    if (perm[i] > perm[i + 1])
+    {
+        printf("Error: el array no esta ordenado\n");
+        free(perm);
+        return -1;
+    }
+}
+
+printf("Array ordenado correctamente\n");
+
   for(j = 0; j < tamano; j++) {
     printf("%d \t", perm[j]);
   }

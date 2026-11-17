@@ -140,10 +140,6 @@ int merge(int *array, int ip, int iu, int im)
     fprintf(stderr, "Error reservando memoria en el merge\n");
     return ERR;
   }
-  for (int i = 0; i < iu - ip + 1; i++)
-  {
-    tabla_aux[i] = array[ip + i];
-  }
 
   int i = ip, j = im + 1, k = 0;
   int OB = 0;
@@ -309,7 +305,7 @@ int pivot_mean(int *array, int ip, int iu, int *pos)
   int mean = 0;
   mean = ip + (iu - ip) / 2;
   *pos = mean;
-  return OK;
+  return 0;
 }
 
 /***************************************************/
@@ -369,10 +365,11 @@ static int quicksort_rec(int *array, int ip, int iu, pfunc_pivot pivot)
 {
   int pos, OB, left = 0, right = 0;
 
-  if (array == NULL || ip < 0 || ip > iu)
+  if (array == NULL || ip < 0 || iu < ip - 1)
     return ERR;
-  if (ip == iu)
-    return 0;
+
+  if (ip >= iu)
+      return 0;
 
   OB = partition(array, ip, iu, &pos, pivot);
   if (OB == ERR)
@@ -401,35 +398,7 @@ int QuickSort_min(int *array, int ip, int iu)
 
 int QuickSort_mean(int *array, int ip, int iu)
 {
-  if (array == NULL || ip < 0)
-  {
-    return ERR;
-  }
-  if (iu <= ip)
-  {
-    return 0;
-  }
-  int pos;
-
-  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
-  if (ob_partition == ERR)
-  {
-    return ERR;
-  }
-
-  int QuickSort_left = QuickSort_mean(array, ip, pos - 1);
-  if (QuickSort_left == ERR)
-  {
-    return ERR;
-  }
-
-  int QuickSort_right = QuickSort_mean(array, pos + 1, iu);
-  if (QuickSort_right == ERR)
-  {
-    return ERR;
-  }
-
-  return ob_partition + QuickSort_left + QuickSort_right;
+    return quicksort_rec(array, ip, iu, pivot_mean);
 }
 
 int QuickSort_median(int *array, int ip, int iu)
