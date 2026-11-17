@@ -324,41 +324,39 @@ int pivot_median(int *array, int ip, int iu, int *pos)
 
   if (array == NULL || ip < 0 || iu < ip || pos == NULL)
     return ERR;
-}
-if (iu <= ip)
-{
-  return 0;
-}
-int pos;
 
-int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
-if (ob_partition == ERR)
-{
+  a = ip;
+  b = ip + (iu - ip) / 2;
+  c = iu;
+
   OB++;
-  if (array[b] < array[c])
+  if (array[a] < array[b])
   {
-    *pos = b;
+    OB++;
+    if (array[b] < array[c])
+    {
+      *pos = b;
+    }
+    else
+    {
+      OB++;
+      *pos = (array[a] < array[c]) ? c : a;
+    }
   }
   else
   {
     OB++;
-    *pos = (array[a] < array[c]) ? c : a;
+    if (array[a] < array[c])
+    {
+      *pos = a;
+    }
+    else
+    {
+      OB++;
+      *pos = (array[b] < array[c]) ? c : b;
+    }
   }
-}
-else
-{
-  OB++;
-  if (array[a] < array[c])
-  {
-    *pos = a;
-  }
-  else
-  {
-    OB++;
-    *pos = (array[b] < array[c]) ? c : b;
-  }
-}
-return OB;
+  return OB;
 }
 
 /***************************************************/
@@ -393,7 +391,7 @@ static int quicksort_rec(int *array, int ip, int iu, pfunc_pivot pivot)
       return ERR;
   }
 
-  return ob_partition + QuickSort_left + QuickSort_right;
+  return OB + left + right;
 }
 
 int QuickSort_min(int *array, int ip, int iu)
@@ -432,4 +430,9 @@ int QuickSort_mean(int *array, int ip, int iu)
   }
 
   return ob_partition + QuickSort_left + QuickSort_right;
+}
+
+int QuickSort_median(int *array, int ip, int iu)
+{
+  return quicksort_rec(array, ip, iu, pivot_median);
 }
