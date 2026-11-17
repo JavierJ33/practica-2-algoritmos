@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sorting.h"
- 
+
 /***************************************************/
 /* Function: InsertSort Date: 06/10/2026           */
 /* Authors: Javier Jarque Narro,                   */
@@ -52,7 +52,7 @@ int InsertSort(int *array, int ip, int iu)
   }
   return OB;
 }
- 
+
 /***************************************************/
 /* Function: swap_s          Date: 06/10/2026      */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -73,7 +73,7 @@ void swap_s(int *a, int *b)
   *b = aux;
   return;
 }
- 
+
 /***************************************************/
 /* Function: BubbleSort    Date: 06/10/2026        */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -94,7 +94,7 @@ int BubbleSort(int *array, int ip, int iu)
   {
     return ERR;
   }
- 
+
   int OB = 0;
   for (int i = iu; i > ip; i--)
   {
@@ -109,7 +109,7 @@ int BubbleSort(int *array, int ip, int iu)
   }
   return OB;
 }
- 
+
 /***************************************************/
 /* Function: merge         Date: 21/10/2026        */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -133,52 +133,64 @@ int merge(int *array, int ip, int iu, int im)
   {
     return ERR;
   }
- 
-  n = iu - ip + 1;
-  aux = (int *)malloc(n * sizeof(int));
-  if (aux == NULL)
+
+  int *tabla_aux = (int *)malloc((iu - ip + 1) * sizeof(int));
+  if (tabla_aux == NULL)
   {
-    fprintf(stderr, "Error reservando memoria en el merge\n")
+    fprintf(stderr, "Error reservando memoria en el merge\n");
     return ERR;
   }
- 
-  /* Copy the segment to the auxiliary table */
-  for (k = 0; k < n; k++)
+  for (int i = 0; i < iu - ip + 1; i++)
   {
-    aux[k] = array[ip + k];
+    tabla_aux[i] = array[ip + i];
   }
- 
-  mid = im - ip; /* last index of the left half inside aux */
-  i = 0;
-  j = mid + 1;
-  k = ip;
- 
-  while (i <= mid && j < n)
+
+  int i = ip, j = im + 1, k = 0;
+  int OB = 0;
+  while ((i <= im) && (j <= iu))
   {
     OB++;
-    if (aux[i] <= aux[j])
+    if (array[i] < array[j])
     {
-      array[k++] = aux[i++];
+      tabla_aux[k] = array[i];
+      i++;
     }
     else
     {
-      array[k++] = aux[j++];
+      tabla_aux[k] = array[j];
+      j++;
+    }
+    k++;
+  }
+  if (i > im)
+  {
+    while (j <= iu)
+    {
+      tabla_aux[k] = array[j];
+      j++;
+      k++;
     }
   }
-  /* Only one of these two loops runs (no comparisons) */
-  while (i <= mid)
+  else if (j > iu)
   {
-    array[k++] = aux[i++];
+    while (i <= im)
+    {
+      tabla_aux[k] = array[i];
+      i++;
+      k++;
+    }
   }
-  while (j < n)
+  /*FUNCION COPIAR PROFE*/
+  array += ip;
+  for (int i = 0; i <= iu - ip; i++)
   {
-    array[k++] = aux[j++];
+    array[i] = tabla_aux[i];
   }
- 
-  free(aux);
+  array -= ip;
+  free(tabla_aux);
   return OB;
 }
- 
+
 /***************************************************/
 /* Function: MergeSort     Date: 21/10/2026        */
 /* Authors: Gonzalez Hijano, Ivan                  */
@@ -197,29 +209,29 @@ int merge(int *array, int ip, int iu, int im)
 int MergeSort(int *array, int ip, int iu)
 {
   int im, left, right, mrg;
- 
+
   if (array == NULL || ip < 0 || ip > iu)
     return ERR;
   if (ip == iu)
     return 0;
- 
+
   im = ip + (iu - ip) / 2;
- 
+
   left = MergeSort(array, ip, im);
   if (left == ERR)
     return ERR;
- 
+
   right = MergeSort(array, im + 1, iu);
   if (right == ERR)
     return ERR;
- 
+
   mrg = merge(array, ip, iu, im);
   if (mrg == ERR)
     return ERR;
- 
+
   return left + right + mrg;
 }
- 
+
 /***************************************************/
 /* Function: partition                             */
 /*                                                 */
@@ -240,19 +252,19 @@ int MergeSort(int *array, int ip, int iu)
 int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 {
   int OB, sel, k, m;
- 
+
   if (array == NULL || ip < 0 || iu < ip || pos == NULL || pivot == NULL)
     return ERR;
- 
+
   sel = pivot(array, ip, iu, &m);
   if (sel == ERR || m < ip || m > iu)
     return ERR;
   OB = sel; /* comparisons of the selector, counted once */
- 
+
   k = array[m];
   swap_s(&array[ip], &array[m]);
   m = ip;
- 
+
   for (int i = ip + 1; i <= iu; i++)
   {
     OB++;
@@ -263,11 +275,11 @@ int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
     }
   }
   swap_s(&array[ip], &array[m]);
- 
+
   *pos = m;
   return OB;
 }
- 
+
 /***************************************************/
 /* Function: pivot_min                             */
 /* Pivot = first element of the segment. No key    */
@@ -281,7 +293,7 @@ int pivot_min(int *array, int ip, int iu, int *pos)
   *pos = ip;
   return 0;
 }
- 
+
 /***************************************************/
 /* Function: pivot_mean                            */
 /* Pivot = central index of the segment, computed  */
@@ -291,11 +303,15 @@ int pivot_min(int *array, int ip, int iu, int *pos)
 int pivot_mean(int *array, int ip, int iu, int *pos)
 {
   if (array == NULL || ip < 0 || iu < ip || pos == NULL)
+  {
     return ERR;
-  *pos = ip + (iu - ip) / 2;
-  return 0;
+  }
+  int mean = 0;
+  mean = ip + (iu - ip) / 2;
+  *pos = mean;
+  return OK;
 }
- 
+
 /***************************************************/
 /* Function: pivot_median                          */
 /* Pivot = index of the median of the values at    */
@@ -305,45 +321,46 @@ int pivot_mean(int *array, int ip, int iu, int *pos)
 int pivot_median(int *array, int ip, int iu, int *pos)
 {
   int a, b, c, OB = 0;
- 
+
   if (array == NULL || ip < 0 || iu < ip || pos == NULL)
     return ERR;
-  }
-  if(iu<=ip){
-    return 0;
-  }
-  int pos;
-  
-  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
-  if(ob_partition == ERR)
+}
+if (iu <= ip)
+{
+  return 0;
+}
+int pos;
+
+int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
+if (ob_partition == ERR)
+{
+  OB++;
+  if (array[b] < array[c])
   {
-    OB++;
-    if (array[b] < array[c])
-    {
-      *pos = b;
-    }
-    else
-    {
-      OB++;
-      *pos = (array[a] < array[c]) ? c : a;
-    }
+    *pos = b;
   }
   else
   {
     OB++;
-    if (array[a] < array[c])
-    {
-      *pos = a;
-    }
-    else
-    {
-      OB++;
-      *pos = (array[b] < array[c]) ? c : b;
-    }
+    *pos = (array[a] < array[c]) ? c : a;
   }
-  return OB;
 }
- 
+else
+{
+  OB++;
+  if (array[a] < array[c])
+  {
+    *pos = a;
+  }
+  else
+  {
+    OB++;
+    *pos = (array[b] < array[c]) ? c : b;
+  }
+}
+return OB;
+}
+
 /***************************************************/
 /* Function: quicksort_rec (static helper)         */
 /* Generic QuickSort parametrised by the pivot     */
@@ -353,16 +370,16 @@ int pivot_median(int *array, int ip, int iu, int *pos)
 static int quicksort_rec(int *array, int ip, int iu, pfunc_pivot pivot)
 {
   int pos, OB, left = 0, right = 0;
- 
+
   if (array == NULL || ip < 0 || ip > iu)
     return ERR;
   if (ip == iu)
     return 0;
- 
+
   OB = partition(array, ip, iu, &pos, pivot);
   if (OB == ERR)
     return ERR;
- 
+
   if (ip < pos - 1)
   {
     left = quicksort_rec(array, ip, pos - 1, pivot);
@@ -376,21 +393,43 @@ static int quicksort_rec(int *array, int ip, int iu, pfunc_pivot pivot)
       return ERR;
   }
 
- return ob_partition + QuickSort_left + QuickSort_right;
-
+  return ob_partition + QuickSort_left + QuickSort_right;
 }
- 
+
 int QuickSort_min(int *array, int ip, int iu)
 {
   return quicksort_rec(array, ip, iu, pivot_min);
 }
- 
+
 int QuickSort_mean(int *array, int ip, int iu)
 {
-  return quicksort_rec(array, ip, iu, pivot_mean);
-}
- 
-int QuickSort_median(int *array, int ip, int iu)
-{
-  return quicksort_rec(array, ip, iu, pivot_median);
+  if (array == NULL || ip < 0)
+  {
+    return ERR;
+  }
+  if (iu <= ip)
+  {
+    return 0;
+  }
+  int pos;
+
+  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
+  if (ob_partition == ERR)
+  {
+    return ERR;
+  }
+
+  int QuickSort_left = QuickSort_mean(array, ip, pos - 1);
+  if (QuickSort_left == ERR)
+  {
+    return ERR;
+  }
+
+  int QuickSort_right = QuickSort_mean(array, pos + 1, iu);
+  if (QuickSort_right == ERR)
+  {
+    return ERR;
+  }
+
+  return ob_partition + QuickSort_left + QuickSort_right;
 }
