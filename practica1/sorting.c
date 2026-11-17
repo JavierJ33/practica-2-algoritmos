@@ -129,11 +129,7 @@ int BubbleSort(int *array, int ip, int iu)
 /***************************************************/
 int merge(int *array, int ip, int iu, int im)
 {
-  int OB = 0;
-  int n, i, j, k, mid;
-  int *aux;
- 
-  if (array == NULL || ip < 0 || iu < ip || im < ip || im > iu)
+  if (array == NULL || ip < 0 || iu < ip || im < ip || im >= iu)
   {
     return ERR;
   }
@@ -142,7 +138,7 @@ int merge(int *array, int ip, int iu, int im)
   aux = (int *)malloc(n * sizeof(int));
   if (aux == NULL)
   {
-    fprintf(stderr, "Error reservando memoria en merge\n");
+    fprintf(stderr, "Error reservando memoria en el merge\n")
     return ERR;
   }
  
@@ -312,13 +308,14 @@ int pivot_median(int *array, int ip, int iu, int *pos)
  
   if (array == NULL || ip < 0 || iu < ip || pos == NULL)
     return ERR;
- 
-  a = ip;
-  b = ip + (iu - ip) / 2;
-  c = iu;
- 
-  OB++;
-  if (array[a] < array[b])
+  }
+  if(iu<=ip){
+    return 0;
+  }
+  int pos;
+  
+  int ob_partition = partition(array, ip, iu, &pos, pivot_mean);
+  if(ob_partition == ERR)
   {
     OB++;
     if (array[b] < array[c])
@@ -378,7 +375,9 @@ static int quicksort_rec(int *array, int ip, int iu, pfunc_pivot pivot)
     if (right == ERR)
       return ERR;
   }
-  return OB + left + right;
+
+ return ob_partition + QuickSort_left + QuickSort_right;
+
 }
  
 int QuickSort_min(int *array, int ip, int iu)
