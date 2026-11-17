@@ -66,19 +66,6 @@ plot "quicksort_min.log" using 1:3 with linespoints title "QuickSort min", \
      g_median(x) with lines dashtype 2 title "Ajuste median"
 
 
-# Grafica OB minima y maxima
-set output "quicksort_ob_minmax.png"
-set title "QuickSort - Comparaciones minimas y maximas"
-set ylabel "Comparaciones (OB)"
-
-plot "quicksort_min.log" using 1:5 with lines title "Min min", \
-     "quicksort_min.log" using 1:6 with lines title "Max min", \
-     "quicksort_mean.log" using 1:5 with lines title "Min mean", \
-     "quicksort_mean.log" using 1:6 with lines title "Max mean", \
-     "quicksort_median.log" using 1:5 with lines title "Min median", \
-     "quicksort_median.log" using 1:6 with lines title "Max median"
-
-
 # ==========================================
 # GRAFICAS INDIVIDUALES DE QUICKSORT_MIN
 # ==========================================
