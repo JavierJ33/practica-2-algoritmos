@@ -1,10 +1,10 @@
 /***********************************************************/
-/* Program: exercise5                  Date:               */
+/* Program: exercise5b                 Date:               */
 /* Authors: Profesorado                                    */
 /*                                                         */
 /* Programa that writes in a file                          */
 /* the average times of the algorithm                      */
-/* BBsort                                                  */
+/* QuickSort                                               */
 /*                                                         */
 /* Input: Command Line                                     */
 /* -num_min: lowest number of table elements               */
