@@ -420,3 +420,177 @@ variance of residuals (reduced chisquare) = WSSR/ndf   : 6.98113e-14
 Final set of parameters            Asymptotic Standard Error
 =======================            ==========================
 b_median        = 5.4681e-09       +/- 1.408e-11    (0.2575%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_min.log" using 1:4
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f_min(x)
+	f_min(x) = a_min*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   3 1.0455669236e+05  -2.23e-02  5.93e+00    1.089520e+00
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 104557
+rel. change during last iteration : -2.22653e-07
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 107.784
+variance of residuals (reduced chisquare) = WSSR/ndf   : 11617.4
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a_min           = 1.08952          +/- 0.005743     (0.5271%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_mean.log" using 1:4
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f_mean(x)
+	f_mean(x) = a_mean*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   3 9.5084487709e+04  -2.57e-02  5.93e+00    1.091651e+00
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 95084.5
+rel. change during last iteration : -2.56628e-07
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 102.786
+variance of residuals (reduced chisquare) = WSSR/ndf   : 10564.9
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a_mean          = 1.09165          +/- 0.005477     (0.5017%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_median.log" using 1:4
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f_median(x)
+	f_median(x) = a_median*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   3 5.7133906184e+03  -3.47e-01  5.93e+00    1.082570e+00
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 5713.39
+rel. change during last iteration : -3.46649e-06
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 25.1957
+variance of residuals (reduced chisquare) = WSSR/ndf   : 634.821
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a_median        = 1.08257          +/- 0.001343     (0.124%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_min.log" using 1:3
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g_min(x)
+	g_min(x) = b_min*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   3 1.6199637528e-10  -3.05e-02  5.93e-08    5.874472e-09
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 1.61996e-10
+rel. change during last iteration : -3.05208e-07
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 4.24259e-06
+variance of residuals (reduced chisquare) = WSSR/ndf   : 1.79996e-11
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b_min           = 5.87447e-09      +/- 2.261e-10    (3.848%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_mean.log" using 1:3
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g_mean(x)
+	g_mean(x) = b_mean*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   4 5.1409018320e-12  -3.14e-10  5.93e-09    5.327945e-09
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 5.1409e-12
+rel. change during last iteration : -3.14261e-15
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 7.55785e-07
+variance of residuals (reduced chisquare) = WSSR/ndf   : 5.71211e-13
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b_mean          = 5.32795e-09      +/- 4.027e-11    (0.7559%)
+
+
+*******************************************************************************
+Tue Nov 17 19:03:20 2026
+
+
+FIT:    data read from "quicksort_median.log" using 1:3
+        format = x:z
+        x range restricted to [100.000 : 1000.00]
+        #datapoints = 10
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g_median(x)
+	g_median(x) = b_median*x*log(x)/log(2.0)
+fitted parameters initialized with current variable values
+
+   4 6.2830142281e-13  -1.21e-09  5.93e-09    5.468099e-09
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 6.28301e-13
+rel. change during last iteration : -1.20532e-14
+
+degrees of freedom    (FIT_NDF)                        : 9
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 2.64218e-07
+variance of residuals (reduced chisquare) = WSSR/ndf   : 6.98113e-14
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+b_median        = 5.4681e-09       +/- 1.408e-11    (0.2575%)
